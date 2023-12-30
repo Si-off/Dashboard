@@ -1,3 +1,3 @@
 export { default as LoginPage } from './LoginPage';
-export { default as AdminPage } from './AdminPage';
-export { default as UserPage } from './UserPage';
+export { default as Dashboard } from './Dashboard';
+export { default as NotFound } from './NotFound';

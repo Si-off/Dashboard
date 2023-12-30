@@ -1,23 +1,24 @@
-import { Link, Route, Routes } from 'react-router-dom';
-import { AdminPage, LoginPage, UserPage } from './pages';
+import { Route, Routes } from 'react-router-dom';
+import { LoginPage, Dashboard, NotFound } from './pages';
+import styled from 'styled-components';
 
 function App() {
   return (
-    <div>
-      <header>header</header>
-      <button>
-        <Link to='/admin'>admin</Link>
-      </button>
-      <button>
-        <Link to='/user'>user</Link>
-      </button>
+    <Container>
       <Routes>
         <Route path='/' Component={LoginPage} />
-        <Route path='/admin' Component={AdminPage} />
-        <Route path='/user' Component={UserPage} />
+        <Route path='/dashboard' Component={Dashboard} />
+        <Route path='/*' Component={NotFound} />
       </Routes>
-    </div>
+    </Container>
   );
 }
 
 export default App;
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+`;
