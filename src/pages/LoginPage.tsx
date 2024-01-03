@@ -1,3 +1,4 @@
+import { login } from 'api';
 import { SyntheticEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -19,17 +20,23 @@ const LoginPage = () => {
     }
   };
 
+  const handleLogin = async () => {
+    const res = await login('tester1@naver.com', 'tester1');
+    console.log(res);
+  };
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('submit');
-    nagivate('/dashboard');
+    // nagivate('/dashboard');
   };
 
   return (
     <S.Form onSubmit={handleSubmit}>
       <S.Input name='id' placeholder='id' />
       <S.Input name='password' placeholder='password' />
-      <button type='submit'>submit</button>
+      <button type='submit' onClick={handleLogin}>
+        submit
+      </button>
     </S.Form>
   );
 };

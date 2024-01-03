@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 
 const BASE_URL = process.env.REACT_APP_API_URL;
 
@@ -14,18 +14,20 @@ export default class Client {
 
   async get(params: object = {}) {
     try {
-      const res = await this.instance.get(this.url, { params });
+      const res = await this.instance.get(this.url, params);
 
-      console.log(res);
+      const { data, status } = res;
+      return { ...data, status };
     } catch (error) {
       console.error(error);
     }
   }
-  async post(params: object = {}) {
+  async post(params: object = {}, config?: AxiosRequestConfig) {
     try {
-      const res = await this.instance.post(this.url, { params });
+      const res = await this.instance.post(this.url, params, config);
 
-      console.log(res);
+      const { data, status } = res;
+      return { ...data, status };
     } catch (error) {
       console.error(error);
     }
