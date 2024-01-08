@@ -1,12 +1,13 @@
-import { AxiosRequestConfig } from 'axios';
-import Client from './axios';
 import { LoginRes } from 'types';
+import createAxiosInstance from './axios';
 
 export const login = async (id: string, password: string): Promise<LoginRes> => {
   const auth = btoa(`${id}:${password}`);
-  const res = await new Client('/auth/login/email').post({}, {
-    headers: { Authorization: `Basic ${auth}` },
-  } as AxiosRequestConfig);
+
+  const res = await createAxiosInstance('/auth/login/email').post(
+    {},
+    { headers: { Authorization: `Basic ${auth}` } }
+  );
 
   return res;
 };

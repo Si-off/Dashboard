@@ -1,35 +1,37 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 
 const BASE_URL = process.env.REACT_APP_API_URL;
+/**
+ *
+ * @param
+ * @returns
+ */
+const createAxiosInstance = (url: string) => {
+  const endpoint = url;
+  const instance: AxiosInstance = axios.create({ baseURL: BASE_URL });
 
-const axiosInstance = axios.create({ baseURL: BASE_URL });
-
-export default class Client {
-  private readonly instance: AxiosInstance = axiosInstance;
-  private readonly url: string;
-
-  constructor(url: string) {
-    this.url = url;
-  }
-
-  async get(params: object = {}) {
+  const get = async (params: object = {}) => {
     try {
-      const res = await this.instance.get(this.url, params);
+      const res = await instance.get(endpoint, params);
 
       const { data, status } = res;
       return { ...data, status };
     } catch (error) {
       console.error(error);
     }
-  }
-  async post(params: object = {}, config?: AxiosRequestConfig) {
+  };
+  const post = async (params: object = {}, config?: AxiosRequestConfig) => {
     try {
-      const res = await this.instance.post(this.url, params, config);
+      const res = await instance.post(endpoint, params, config);
 
       const { data, status } = res;
       return { ...data, status };
     } catch (error) {
       console.error(error);
     }
-  }
-}
+  };
+
+  return { get, post };
+};
+
+export default createAxiosInstance;
