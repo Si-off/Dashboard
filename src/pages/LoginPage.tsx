@@ -1,18 +1,28 @@
-import { login } from 'api';
+import { postLogin, postRegister } from 'api';
 import { SyntheticEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { setToken } from 'utils/token';
+
+type UserInfo = {
+  id: string;
+  password: string;
+};
 
 const LoginPage = () => {
-  // inputData
-  const [value, setValue] = useState();
+  const [loginInfo, setLoginInfo] = useState<UserInfo>({ id: '', password: '' });
   const nagivate = useNavigate();
 
   const handleChange = (e: SyntheticEvent) => {
     const target = e.target as HTMLInputElement;
 
-    switch (target.name) {
-      case '':
+    switch (target.name as keyof UserInfo) {
+      case 'id':
+        setLoginInfo((prev) => ({ ...prev, id: target.value }));
+        break;
+
+      case 'password':
+        setLoginInfo((prev) => ({ ...prev, password: target.value }));
         break;
 
       default:
@@ -20,23 +30,31 @@ const LoginPage = () => {
     }
   };
 
-  const handleLogin = async () => {
-    const res = await login('tester1@naver.com', 'tester1');
-    console.log(res);
-  };
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('submit');
+    const res = await postLogin(loginInfo.id, loginInfo.password);
+    console.log(res);
+
+    if (res) {
+      const { accessToken, refreshToken } = res;
+      accessToken && setToken('access_token', accessToken);
+      refreshToken && setToken('refresh_token', refreshToken);
+    }
+
+    // postRegister({ name: 'asd', nickname: 'asd', email: 'tesss@naver.com', password: '1q2w3e' });
     // nagivate('/dashboard');
   };
 
   return (
     <S.Form onSubmit={handleSubmit}>
-      <S.Input name='id' placeholder='id' />
-      <S.Input name='password' placeholder='password' />
-      <button type='submit' onClick={handleLogin}>
-        submit
-      </button>
+      <S.Input name='id' placeholder='id' value={loginInfo.id} onChange={handleChange} />
+      <S.Input
+        name='password'
+        placeholder='password'
+        value={loginInfo.password}
+        onChange={handleChange}
+      />
+      <button type='submit'>submit</button>
     </S.Form>
   );
 };

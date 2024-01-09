@@ -14,4 +14,6 @@ export interface UserRes {
   };
 }
 
+export type RegisterReq = { nickname: string; email: string; password: string; name: string };
+
 export type CookieName = 'accessToken' | 'refreshToken';
