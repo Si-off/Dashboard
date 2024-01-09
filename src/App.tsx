@@ -1,16 +1,19 @@
 import { Route, Routes } from 'react-router-dom';
 import { LoginPage, Dashboard, NotFound } from './pages';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
+import theme from 'styles/theme';
 
 function App() {
   return (
-    <Container>
-      <Routes>
-        <Route path='/' Component={LoginPage} />
-        <Route path='/dashboard' Component={Dashboard} />
-        <Route path='/*' Component={NotFound} />
-      </Routes>
-    </Container>
+    <ThemeProvider theme={theme}>
+      <Container>
+        <Routes>
+          <Route path='/' Component={LoginPage} />
+          <Route path='/dashboard' Component={Dashboard} />
+          <Route path='/*' Component={NotFound} />
+        </Routes>
+      </Container>
+    </ThemeProvider>
   );
 }
 

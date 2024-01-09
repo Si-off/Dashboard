@@ -1,11 +1,7 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
 
 const BASE_URL = process.env.REACT_APP_API_URL;
-/**
- *
- * @param
- * @returns
- */
+
 const createAxiosInstance = (url: string) => {
   const endpoint = url;
   const instance: AxiosInstance = axios.create({ baseURL: BASE_URL, withCredentials: true });
